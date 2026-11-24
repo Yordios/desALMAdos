@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>desALMAdos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&family=Permanent+Marker&display=swap">
+<style>
+/* Layout: arco de herradura con Lucía + polaroid de Antonio, cinta roja de volantes, secciones alternas oscuro / papel / clavel. */
+:root {
+  --ink: #110c0d;        /* negro de encaje */
+  --ink-2: #1c1416;      /* negro de tarima */
+  --clavel: #e3163c;     /* rojo clavel */
+  --clavel-lt: #ff5f7a;  /* clavel claro, para texto pequeño sobre negro */
+  --clavel-deep: #7d0b22;
+  --hueso: #f4ede3;      /* papel de servilleta */
+  --albero: #dcb46a;     /* arena de plaza */
+  --line: rgba(244, 237, 227, .16);
+  --font-display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+  --font-hand: "Permanent Marker", "Segoe Print", "Bradley Hand", cursive;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--hueso);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { display: block; height: auto; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, p, figure { margin: 0; }
+:focus-visible { outline: 3px solid var(--albero); outline-offset: 3px; }
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.eyebrow { font-family: var(--font-hand); color: var(--albero); font-size: 1.25rem; transform: rotate(-3deg); display: inline-block; }
+.h2 { font-family: var(--font-display); text-transform: uppercase; font-weight: 400; font-size: clamp(2.4rem, 7vw, 4.6rem); line-height: .98; letter-spacing: .01em; text-wrap: balance; }
+.h2 em { font-style: normal; color: var(--clavel); }
+
+/* ---------- barra superior ---------- */
+.top { padding-block: 18px; }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.mini-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .04em; text-decoration: none; text-transform: uppercase; }
+.mini-logo b { color: var(--clavel); font-weight: 400; }
+.nav { display: flex; gap: 6px 22px; flex-wrap: wrap; font-size: .82rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.nav a { text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+.nav a:hover { border-color: var(--clavel); }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding-block: 28px 64px; }
+.hero::before { /* trama de puntos */
+  content: ""; position: absolute; inset: 0 0 0 40%;
+  background-image: radial-gradient(rgba(227, 22, 60, .38) 1.4px, transparent 1.8px);
+  background-size: 16px 16px;
+  -webkit-mask-image: linear-gradient(to left, #000, transparent 85%);
+  mask-image: linear-gradient(to left, #000, transparent 85%);
+  pointer-events: none;
+}
+.hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 40px; align-items: center; }
+.logo { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; line-height: .92; font-size: clamp(2.7rem, 12.2vw, 7rem); white-space: nowrap; margin: 6px 0 18px; letter-spacing: .01em; }
+.logo .o { color: transparent; -webkit-text-stroke: 2px var(--hueso); }
+.logo .alma { color: var(--clavel); text-shadow: 4px 4px 0 var(--clavel-deep); }
+.lead { font-size: clamp(1.15rem, 2.4vw, 1.45rem); line-height: 1.4; font-weight: 500; max-width: 30ch; text-wrap: balance; }
+.sub { margin-top: 14px; max-width: 46ch; color: rgba(244, 237, 227, .78); }
+.cta-row { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 700 .9rem/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; text-decoration: none; padding: 15px 22px; border-radius: 999px; border: 2px solid var(--hueso); color: var(--hueso); background: transparent; cursor: pointer; transition: transform .15s, background .15s, color .15s; }
+.btn:hover { transform: translateY(-3px) rotate(-1deg); }
+.btn.primary { background: var(--clavel); border-color: var(--clavel); color: var(--hueso); box-shadow: 4px 4px 0 var(--clavel-deep); }
+.btn.primary:hover { background: var(--hueso); color: var(--clavel); border-color: var(--hueso); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn.social { --cut: var(--ink); padding: 12px 18px; }
+.btn.social:hover { background: var(--hueso); color: var(--ink); --cut: var(--hueso); }
+
+.hero-art { position: relative; padding: 0 0 38px; }
+.arco { border-radius: 50% 50% 14px 14px / 30% 30% 14px 14px; overflow: hidden; border: 3px solid var(--hueso); box-shadow: 14px 14px 0 var(--clavel); background: var(--ink-2); }
+.arco img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 32%; }
+.polaroid { position: absolute; left: -7%; bottom: 0; width: 44%; background: var(--hueso); color: var(--ink); padding: 8px 8px 12px; transform: rotate(-6deg); box-shadow: 6px 8px 0 rgba(0, 0, 0, .45); }
+.polaroid img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 20%; }
+.polaroid figcaption { font-family: var(--font-hand); text-align: center; margin-top: 8px; font-size: .95rem; line-height: 1.1; }
+.sticker { position: absolute; right: -2%; top: 6%; width: 106px; height: 106px; border-radius: 50%; background: var(--albero); color: var(--ink); display: grid; place-items: center; text-align: center; font-family: var(--font-hand); font-size: .95rem; line-height: 1; transform: rotate(10deg); box-shadow: 4px 4px 0 var(--ink); padding: 8px; }
+
+/* ---------- cinta de volantes ---------- */
+.ticker-wrap { overflow: hidden; padding-block: 26px; }
+.ticker { background: var(--clavel); color: var(--ink); transform: rotate(-1.6deg); width: 104%; margin-left: -2%; padding-block: 12px; overflow: hidden; border-block: 3px solid var(--ink); box-shadow: 0 0 0 3px var(--hueso); }
+.ticker-track { display: flex; width: max-content; animation: marquee 32s linear infinite; }
+.ticker-track span { font-family: var(--font-display); text-transform: uppercase; font-size: 1.5rem; letter-spacing: .06em; padding-inline: 18px; white-space: nowrap; }
+.ticker-track span::after { content: "✦"; margin-left: 36px; font-size: 1rem; color: var(--hueso); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- música ---------- */
+.sec { padding-block: 84px; }
+.sec-head { display: grid; gap: 12px; margin-bottom: 36px; }
+.sec-head p { max-width: 52ch; color: rgba(244, 237, 227, .75); }
+.player { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 36px; align-items: start; }
+.now { background: var(--clavel); color: var(--hueso); padding: 26px; border-radius: 18px; box-shadow: 10px 10px 0 var(--clavel-deep); display: grid; gap: 20px; position: relative; }
+.disc { width: min(100%, 240px); aspect-ratio: 1; margin-inline: auto; border-radius: 50%; background: radial-gradient(circle, var(--clavel) 0 17%, var(--ink) 17.5% 21%, transparent 21.5%), repeating-radial-gradient(circle, #1a1315 0 3px, #0b0708 3px 6px); border: 4px solid var(--ink); position: relative; display: grid; place-items: center; }
+.disc::after { content: "alma"; font-family: var(--font-hand); font-size: .8rem; color: var(--hueso); transform: translateY(2px); }
+.disc.spin { animation: spin 5s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.now-title { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.05; text-transform: uppercase; letter-spacing: .02em; text-wrap: balance; }
+.now-by { font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; opacity: .85; }
+.bar { display: grid; gap: 8px; }
+.times { display: flex; justify-content: space-between; font-size: .85rem; font-variant-numeric: tabular-nums; font-weight: 700; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 99px; background: linear-gradient(to right, var(--ink) var(--p, 0%), rgba(17, 12, 13, .35) var(--p, 0%)); cursor: pointer; margin: 0; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--hueso); border: 3px solid var(--ink); }
+input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--hueso); border: 3px solid var(--ink); }
+.controls { display: flex; justify-content: center; align-items: center; gap: 18px; }
+.ctl { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--ink); background: transparent; color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: transform .15s; }
+.ctl:hover { transform: scale(1.08); }
+.ctl svg { width: 22px; height: 22px; fill: currentColor; }
+.ctl.big { width: 72px; height: 72px; background: var(--ink); color: var(--hueso); box-shadow: 4px 4px 0 var(--hueso); }
+.ctl.big svg { width: 30px; height: 30px; }
+.ico-pause { display: none; }
+.is-playing .ico-play { display: none; }
+.is-playing .ico-pause { display: block; }
+
+.tracks { list-style: none; margin: 0; padding: 0; display: grid; }
+.track { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 6px 16px; align-items: center; width: 100%; text-align: left; background: transparent; color: inherit; font: inherit; border: 0; border-top: 1px solid var(--line); padding: 20px 8px; cursor: pointer; transition: background .15s; }
+.tracks li:last-child .track { border-bottom: 1px solid var(--line); }
+.track:hover { background: rgba(244, 237, 227, .05); }
+.track .n { font-family: var(--font-display); font-size: 1.7rem; color: var(--clavel-lt); grid-row: 1 / span 2; align-self: start; font-variant-numeric: tabular-nums; position: relative; height: 1.7em; }
+.track .t { font-family: var(--font-display); font-size: clamp(1.35rem, 3.4vw, 1.9rem); text-transform: uppercase; letter-spacing: .02em; line-height: 1.1; }
+.track .d { font-size: .9rem; color: rgba(244, 237, 227, .7); grid-column: 2; max-width: 56ch; }
+.track .tag { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; border: 1.5px solid var(--albero); color: var(--albero); border-radius: 99px; padding: 4px 10px; white-space: nowrap; }
+.track.active .t { color: var(--clavel-lt); }
+.eq { display: none; position: absolute; inset: 0 auto auto 0; gap: 3px; align-items: flex-end; height: 1.5rem; }
+.eq i { width: 5px; background: var(--clavel-lt); height: 40%; border-radius: 1px; }
+.track.active .eq { display: flex; }
+.track.active .num { visibility: hidden; }
+.is-playing .track.active .eq i { animation: eq .8s ease-in-out infinite alternate; }
+.is-playing .track.active .eq i:nth-child(2) { animation-delay: -.3s; }
+.is-playing .track.active .eq i:nth-child(3) { animation-delay: -.6s; }
+@keyframes eq { from { height: 20%; } to { height: 100%; } }
+
+/* ---------- quiénes son ---------- */
+.duo { background: var(--ink-2); position: relative; }
+.duo::before, .papel::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 22px; background: radial-gradient(circle at 14px 0, var(--clavel) 13px, transparent 14px) repeat-x; background-size: 28px 22px; }
+.papel::before { background: radial-gradient(circle at 14px 0, var(--ink-2) 13px, transparent 14px) repeat-x; background-size: 28px 22px; }
+.people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; align-items: start; }
+.person:nth-child(2) { margin-top: 56px; }
+.person .ph { overflow: hidden; border: 3px solid var(--hueso); border-radius: 14px; position: relative; }
+.person .ph img { width: 100%; aspect-ratio: 4 / 4.6; object-fit: cover; }
+.person:nth-child(1) .ph { transform: rotate(-1.5deg); box-shadow: 10px 10px 0 var(--clavel); }
+.person:nth-child(2) .ph { transform: rotate(1.5deg); box-shadow: -10px 10px 0 var(--albero); }
+.person:nth-child(1) .ph img { object-position: 50% 30%; }
+.person:nth-child(2) .ph img { object-position: 50% 18%; }
+.person h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1; margin-top: 26px; letter-spacing: .01em; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 14px; }
+.chips span { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; background: var(--hueso); color: var(--ink); padding: 5px 11px; border-radius: 99px; }
+.person .quip { font-family: var(--font-hand); color: var(--albero); font-size: 1.15rem; line-height: 1.3; margin-bottom: 12px; }
+.person p.bio { color: rgba(244, 237, 227, .82); max-width: 50ch; }
+
+/* ---------- historia (papel) ---------- */
+.papel { background: var(--hueso); color: var(--ink); position: relative; }
+.papel .h2 em { color: var(--clavel); }
+.story { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 56px; align-items: start; }
+.story .intro { position: sticky; top: 24px; display: grid; gap: 16px; }
+.story .intro p { max-width: 36ch; color: rgba(17, 12, 13, .75); }
+.timeline { list-style: none; margin: 0; padding: 0 0 0 34px; position: relative; display: grid; gap: 38px; }
+.timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 3px; background: repeating-linear-gradient(to bottom, var(--ink) 0 8px, transparent 8px 14px); }
+.timeline li { position: relative; }
+.timeline li::before { content: ""; position: absolute; left: -34px; top: 6px; width: 17px; height: 17px; border-radius: 50%; background: var(--clavel); border: 3px solid var(--ink); }
+.timeline h3 { font-family: var(--font-hand); font-weight: 400; font-size: 1.5rem; color: var(--clavel); line-height: 1.1; margin-bottom: 6px; transform: rotate(-1.5deg); transform-origin: left; display: inline-block; }
+.timeline p { max-width: 54ch; font-size: 1.05rem; }
+
+/* ---------- el nombre ---------- */
+.nombre { background: var(--clavel); color: var(--hueso); padding-block: 90px; position: relative; overflow: hidden; }
+.nombre::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(17, 12, 13, .22) 1.6px, transparent 2px); background-size: 18px 18px; }
+.nombre .wrap { position: relative; display: grid; gap: 22px; }
+.nombre blockquote { margin: 0; font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2rem, 6.4vw, 4.6rem); line-height: 1.02; letter-spacing: .01em; text-wrap: balance; max-width: 18ch; }
+.nombre blockquote mark { background: var(--ink); color: var(--hueso); padding: 0 .18em; }
+.nombre cite { font-style: normal; font-family: var(--font-hand); font-size: 1.3rem; color: var(--ink); }
+
+/* ---------- futuro ---------- */
+.futuro .notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-top: 12px; }
+.nota { background: var(--hueso) repeating-linear-gradient(to bottom, transparent 0 31px, rgba(60, 100, 200, .35) 31px 32px); color: var(--ink); padding: 54px 22px 26px 40px; position: relative; min-height: 260px; box-shadow: 8px 10px 0 rgba(0, 0, 0, .45); border-radius: 4px; background-position: 0 22px; }
+.nota::before { content: ""; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background: rgba(227, 22, 60, .55); }
+.nota:nth-child(1) { transform: rotate(-1.8deg); }
+.nota:nth-child(2) { transform: rotate(1.2deg); margin-top: 26px; }
+.nota:nth-child(3) { transform: rotate(-.8deg); }
+.nota h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: 1.6rem; line-height: 1; margin: -32px 0 0; letter-spacing: .02em; }
+.nota p { font-family: var(--font-hand); font-size: 1.1rem; line-height: 32px; margin-top: 16px; color: #1d2f6b; }
+.nota .blank { display: inline-block; min-width: 4.5em; border-bottom: 2px dashed var(--clavel); color: var(--clavel); line-height: 1.2; }
+.pin { position: absolute; top: -10px; left: 50%; width: 26px; height: 26px; border-radius: 50%; background: var(--clavel); border: 3px solid var(--ink); transform: translateX(-50%); }
+
+/* ---------- pie ---------- */
+.foot { border-top: 1px solid var(--line); padding-block: 56px 48px; }
+.foot .wrap { display: grid; gap: 28px; justify-items: start; }
+.foot .logo { font-size: clamp(2.2rem, 9vw, 4.4rem); margin: 0; }
+.foot .small { font-size: .85rem; color: rgba(244, 237, 227, .6); }
+.socials { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- adaptable ---------- */
+@media (max-width: 880px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .hero-art { width: min(100%, 440px); margin-inline: auto; padding-left: 16px; }
+  .polaroid { left: -2%; }
+  .player { grid-template-columns: minmax(0, 1fr); }
+  .now { max-width: 480px; }
+  .people { grid-template-columns: minmax(0, 1fr); gap: 56px; }
+  .person:nth-child(2) { margin-top: 0; }
+  .story { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .story .intro { position: static; }
+  .futuro .notes { grid-template-columns: minmax(0, 1fr); }
+  .nota:nth-child(2) { margin-top: 0; }
+  .sec { padding-block: 64px; }
+}
+@media (max-width: 520px) {
+  .track { grid-template-columns: 36px minmax(0, 1fr); }
+  .track .tag { grid-column: 2; justify-self: start; }
+  .btn.social span { display: none; }
+  .btn.social { padding: 13px; }
+  .logo .o { -webkit-text-stroke-width: 1.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ticker-track, .disc.spin, .is-playing .track.active .eq i { animation: none; }
+  .btn, .ctl { transition: none; }
+}
+</style>
+
+<style>body{margin:0}</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="mini-logo" href="#inicio" aria-label="desALMAdos, inicio">des<b>ALMA</b>dos</a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#musica">Música</a>
+      <a href="#quienes">Quiénes son</a>
+      <a href="#historia">Historia</a>
+      <a href="#futuro">Futuro</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">flamenco urbano</span>
+        <h1 class="logo" aria-label="desALMAdos"><span class="o">des</span><span class="alma">ALMA</span><span class="o">dos</span></h1>
+        <p class="lead">Flamenco que huele a barrio, a bar de madrugada y a banco de parque.</p>
+        <p class="sub">Ella pone copas. Él carga una guitarra de Linares. Se cruzaron en un parque a las tantas y ya no se soltaron. Música de la calle, para la calle.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#musica">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+            Escuchar ahora
+          </a>
+          <!-- Cambia estos enlaces por los perfiles reales de desALMAdos -->
+          <a class="btn social" href="https://www.instagram.com/desalma2_/" target="_blank" rel="noopener" aria-label="Instagram de desALMAdos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram</span>
+          </a>
+          <a class="btn social" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube de desALMAdos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2C.5 9.1.5 12 .5 12s0 2.9.5 4.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-4.8.5-4.8s0-2.9-.5-4.8z"/><path style="fill: var(--cut)" d="M9.8 15.2V8.8L15.5 12z"/></svg>
+            <span>YouTube</span>
+          </a>
+          <a class="btn social" href="https://open.spotify.com/" target="_blank" rel="noopener" aria-label="Spotify de desALMAdos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path style="stroke: var(--cut)" d="M5.9 9.3c4-1.2 8.5-.9 12.1 1.1M6.6 12.7c3.4-1 7-.6 10 1.1M7.3 15.9c2.7-.7 5.4-.4 7.8.9" stroke-width="1.9" fill="none" stroke-linecap="round"/></svg>
+            <span>Spotify</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <figure class="arco"><img src="img/lucia.jpg" alt="Lucía Palacio con un clavel rojo entre los dientes y vestido de volantes rojo y negro" width="1400" height="1400"></figure>
+        <figure class="polaroid"><img src="img/antonio.jpg" alt="Antonio Quijano sentado, de negro, con pulseras y una cruz al cuello" width="1024" height="1024"><figcaption>Antonio, a las seis cuerdas</figcaption></figure>
+        <div class="sticker" aria-hidden="true">con alma de la calle</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker"><div class="ticker-track" id="ticker"></div></div>
+  </div>
+
+  <section class="sec" id="musica">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">lo que suena</span>
+        <h2 class="h2">Cuatro temas para <em>empezar</em></h2>
+        <p>Dale al play. Palmas, guitarra y dos voces con olor a calle.</p>
+      </div>
+
+      <div class="player" id="player">
+        <div class="now">
+          <div class="disc" id="disc" aria-hidden="true"></div>
+          <div>
+            <div class="now-by">Sonando</div>
+            <div class="now-title" id="nowTitle">Cuando el pan se parte en dos</div>
+          </div>
+          <div class="bar">
+            <input type="range" id="seek" min="0" max="1000" value="0" aria-label="Posición de la canción">
+            <div class="times"><span id="cur">0:00</span><span id="dur">3:42</span></div>
+          </div>
+          <div class="controls">
+            <button class="ctl" id="prev" aria-label="Tema anterior"><svg viewBox="0 0 24 24"><path d="M6 5h2.5v14H6zM20 5v14L9.5 12z"/></svg></button>
+            <button class="ctl big" id="play" aria-label="Reproducir">
+              <svg class="ico-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="ico-pause" viewBox="0 0 24 24"><path d="M6 4.5h4.2v15H6zM13.8 4.5H18v15h-4.2z"/></svg>
+            </button>
+            <button class="ctl" id="next" aria-label="Tema siguiente"><svg viewBox="0 0 24 24"><path d="M15.5 5H18v14h-2.5zM4 5l10.5 7L4 19z"/></svg></button>
+          </div>
+          <audio id="audio" preload="metadata"></audio>
+        </div>
+
+        <ol class="tracks" id="tracks"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec duo" id="quienes">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">dos almas, un compás</span>
+        <h2 class="h2">Quiénes <em>son</em></h2>
+      </div>
+      <div class="people">
+        <article class="person">
+          <div class="ph"><img src="img/lucia.jpg" alt="Retrato de Lucía Palacio" loading="lazy"></div>
+          <h3>Lucía Palacio</h3>
+          <div class="chips"><span>Cante</span><span>Baile</span></div>
+          <p class="quip">Pone cañas de noche y, cuando cierra, el suelo del bar es su tablao.</p>
+          <p class="bio">Gitana de familia y de barrio. En su casa cualquier cumpleaños acababa en bulería y con seis años ya cantaba subida a una silla en el patio de su abuela. Hoy tira cañas en un bar del sur y lo que canta cuando cierra se oye hasta en la otra acera. Baila con los brazos en alto y el clavel entre los dientes, sin pedir permiso.</p>
+        </article>
+        <article class="person">
+          <div class="ph"><img src="img/antonio.jpg" alt="Retrato de Antonio Quijano" loading="lazy"></div>
+          <h3>Antonio Quijano</h3>
+          <div class="chips"><span>Guitarra</span><span>Linares</span></div>
+          <p class="quip">Huele a barniz y a cedro, y suena a asfalto.</p>
+          <p class="bio">Nieto de guitarreros de Linares. Su bisabuelo montó el taller y su abuelo le puso una guitarra en las manos antes de que supiera leer. Aprendió probando guitarras recién barnizadas, entre virutas y cuerdas por estrenar. Toca flamenco de los de siempre, pero lo saca a la calle: a un banco, a una esquina, donde haya gente.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec papel" id="historia">
+    <div class="wrap story">
+      <div class="intro">
+        <span class="eyebrow" style="color: var(--clavel)">cómo empezó todo</span>
+        <h2 class="h2">La noche del <em>parque</em></h2>
+        <p>No hubo casting ni escenario. Hubo un banco, una guitarra y alguien que volvía a casa tarde.</p>
+      </div>
+      <ol class="timeline">
+        <li>
+          <h3>Antes</h3>
+          <p>Ella cantaba en la cocina y bailaba en el pasillo del bar cuando el jefe no miraba. Él afinaba guitarras ajenas en un taller de Linares. Cada uno tenía duende y ningún escenario.</p>
+        </li>
+        <li>
+          <h3>Esa noche</h3>
+          <p>Una noche de entre semana, Lucía cerró el bar y volvió a casa por el parque. En un banco, Antonio tocaba solo y sin público. Ella se paró a escuchar. Al segundo compás ya estaba cantando.</p>
+        </li>
+        <li>
+          <h3>Después</h3>
+          <p>Se quedaron hasta que amaneció. Salió una letra escrita en una servilleta del bar y un rasgueo que todavía no tenía nombre. Quedaron al día siguiente, en el mismo banco.</p>
+        </li>
+        <li>
+          <h3>Hoy</h3>
+          <p>Siguen ensayando en ese parque y escribiendo en servilletas. Ya hay cuatro canciones y todavía falta lo mejor.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="nombre" aria-label="Por qué se llaman desALMAdos">
+    <div class="wrap">
+      <span class="eyebrow" style="color: var(--ink)">el nombre</span>
+      <blockquote>Nos llamaron desalmados por sacar el flamenco a la calle. Nos quedamos con la palabra y le pusimos el <mark>alma</mark> en medio.</blockquote>
+      <cite>Lucía y Antonio</cite>
+    </div>
+  </section>
+
+  <section class="sec futuro" id="futuro">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">lo que viene</span>
+        <h2 class="h2">El futuro está por <em>escribir</em></h2>
+        <p>Páginas en blanco y bolígrafo en mano. Lo escribimos en la calle, con vosotros.</p>
+      </div>
+      <div class="notes">
+        <article class="nota"><span class="pin"></span>
+          <h3>Primer directo</h3>
+          <p>Fecha: <span class="blank">por escribir</span><br>Sitio: un bar, claro.</p>
+        </article>
+        <article class="nota"><span class="pin"></span>
+          <h3>Primer EP</h3>
+          <p>Título: <span class="blank">por escribir</span><br>Canciones: ya hay cuatro.</p>
+        </article>
+        <article class="nota"><span class="pin"></span>
+          <h3>Tu ciudad</h3>
+          <p>¿Quieres a desALMAdos en tu barrio? Escríbenos por Instagram y apuntamos el sitio.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="logo" aria-label="desALMAdos"><span class="o">des</span><span class="alma">ALMA</span><span class="o">dos</span></div>
+    <div class="socials">
+      <a class="btn social" href="https://www.instagram.com/desalma2_/" target="_blank" rel="noopener" aria-label="Instagram de desALMAdos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor" stroke="none"/></svg>
+        <span>Instagram</span>
+      </a>
+      <a class="btn social" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube de desALMAdos">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2C.5 9.1.5 12 .5 12s0 2.9.5 4.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-4.8.5-4.8s0-2.9-.5-4.8z"/><path style="fill: var(--cut)" d="M9.8 15.2V8.8L15.5 12z"/></svg>
+        <span>YouTube</span>
+      </a>
+      <a class="btn social" href="https://open.spotify.com/" target="_blank" rel="noopener" aria-label="Spotify de desALMAdos">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path style="stroke: var(--cut)" d="M5.9 9.3c4-1.2 8.5-.9 12.1 1.1M6.6 12.7c3.4-1 7-.6 10 1.1M7.3 15.9c2.7-.7 5.4-.4 7.8.9" stroke-width="1.9" fill="none" stroke-linecap="round"/></svg>
+        <span>Spotify</span>
+      </a>
+    </div>
+    <p class="small">desALMAdos · con alma de la calle · 2026</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var TRACKS = [
+    { title: "Cuando el pan se parte en dos", src: "audio/pan.mp3", dur: 222, tag: "Con mensaje", desc: "Canción de barrio y de mesa compartida. Palmas, guitarra y dos voces que se pasan el relevo." },
+    { title: "No me dejes a medias", src: "audio/medias.mp3", dur: 156, tag: "Dúo", desc: "Un dúo de ida y vuelta. Ella pregunta, él responde y ninguno suelta." },
+    { title: "Que siga la fiesta", src: "audio/fiesta.mp3", dur: 183, tag: "Rumba", desc: "Rumba con palmas y cajón para empezar la noche otra vez." },
+    { title: "La luna de agosto", src: "audio/luna.mp3", dur: 181, tag: "Balada", desc: "La más callada del repertorio. Una despedida que no termina de irse." }
+  ];
+
+  var audio = document.getElementById("audio");
+  var player = document.getElementById("player");
+  var list = document.getElementById("tracks");
+  var seek = document.getElementById("seek");
+  var cur = document.getElementById("cur");
+  var dur = document.getElementById("dur");
+  var disc = document.getElementById("disc");
+  var playBtn = document.getElementById("play");
+  var nowTitle = document.getElementById("nowTitle");
+  var idx = 0;
+  var dragging = false;
+
+  function fmt(s) {
+    s = Math.max(0, Math.floor(s || 0));
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+
+  // cinta
+  var tk = document.getElementById("ticker");
+  var words = ["Flamenco urbano", "Cante", "Baile", "Guitarra", "Palmas", "Rumba", "Alma de la calle", "desALMAdos"];
+  var html = "";
+  for (var r = 0; r < 4; r++) words.forEach(function (w) { html += "<span>" + w + "</span>"; });
+  tk.innerHTML = html;
+
+  // lista de temas
+  TRACKS.forEach(function (t, i) {
+    var li = document.createElement("li");
+    li.innerHTML =
+      '<button class="track" type="button" data-i="' + i + '">' +
+      '<span class="n"><span class="num">' + (i + 1) + '</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></span>' +
+      '<span class="t">' + t.title + '</span>' +
+      '<span class="tag">' + t.tag + ' · ' + fmt(t.dur) + '</span>' +
+      '<span class="d">' + t.desc + '</span>' +
+      '</button>';
+    list.appendChild(li);
+  });
+
+  function setActive() {
+    Array.prototype.forEach.call(list.querySelectorAll(".track"), function (b, i) {
+      b.classList.toggle("active", i === idx);
+      if (i === idx) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+    });
+    nowTitle.textContent = TRACKS[idx].title;
+    dur.textContent = fmt(TRACKS[idx].dur);
+  }
+
+  function load(i, autoplay) {
+    idx = (i + TRACKS.length) % TRACKS.length;
+    audio.src = TRACKS[idx].src;
+    seek.value = 0; seek.style.setProperty("--p", "0%");
+    cur.textContent = "0:00";
+    setActive();
+    if (autoplay) audio.play().catch(function () {});
+  }
+
+  function toggle() {
+    if (!audio.src) load(idx, false);
+    if (audio.paused) audio.play().catch(function () {}); else audio.pause();
+  }
+
+  function sync() {
+    var on = !audio.paused;
+    player.classList.toggle("is-playing", on);
+    disc.classList.toggle("spin", on);
+    playBtn.setAttribute("aria-label", on ? "Pausar" : "Reproducir");
+  }
+
+  audio.addEventListener("play", sync);
+  audio.addEventListener("pause", sync);
+  audio.addEventListener("loadedmetadata", function () { if (isFinite(audio.duration)) dur.textContent = fmt(audio.duration); });
+  audio.addEventListener("timeupdate", function () {
+    if (dragging || !isFinite(audio.duration) || !audio.duration) return;
+    var p = audio.currentTime / audio.duration * 1000;
+    seek.value = p; seek.style.setProperty("--p", (p / 10) + "%");
+    cur.textContent = fmt(audio.currentTime);
+  });
+  audio.addEventListener("ended", function () {
+    if (idx < TRACKS.length - 1) load(idx + 1, true); else { load(0, false); sync(); }
+  });
+
+  seek.addEventListener("input", function () {
+    dragging = true;
+    seek.style.setProperty("--p", (seek.value / 10) + "%");
+    if (audio.duration) cur.textContent = fmt(audio.duration * seek.value / 1000);
+  });
+  seek.addEventListener("change", function () {
+    if (audio.duration) audio.currentTime = audio.duration * seek.value / 1000;
+    dragging = false;
+  });
+
+  playBtn.addEventListener("click", toggle);
+  document.getElementById("next").addEventListener("click", function () { load(idx + 1, !audio.paused); });
+  document.getElementById("prev").addEventListener("click", function () {
+    if (audio.currentTime > 3) { audio.currentTime = 0; return; }
+    load(idx - 1, !audio.paused);
+  });
+  list.addEventListener("click", function (e) {
+    var b = e.target.closest(".track");
+    if (!b) return;
+    var i = +b.getAttribute("data-i");
+    if (i === idx && audio.src) { toggle(); return; }
+    load(i, true);
+  });
+
+  load(0, false);
+  sync();
+})();
+</script>
+</body>
+</html>
